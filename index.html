@@ -339,10 +339,13 @@
             z-index: 999;
             opacity: 0;
             transition: opacity 0.3s ease;
+            pointer-events: none;
         }
         
         .mobile-menu-overlay.active {
             opacity: 1;
+            display: block;
+            pointer-events: auto;
         }
         
         /* Mobile Menu - Fixed Position */
@@ -1139,9 +1142,9 @@
                 font-size: 3rem;
             }
             
-            /* Show mobile menu overlay when active */
+            /* Overlay remains hidden until activated */
             .mobile-menu-overlay {
-                display: block;
+                display: none;
             }
         }
         

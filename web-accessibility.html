@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Website Accessibility for Hotels & Restaurants | Pulse954</title>
+    <meta name="title" content="Website Accessibility for Hotels & Restaurants | Pulse954">
+    <meta name="description" content="Make your hotel or restaurant website accessible to all guests. ADA-compliant accessibility features including font size control, high contrast mode, and dyslexia-friendly fonts. Increase bookings by 30%.">
+    <meta name="keywords" content="website accessibility, ADA compliance, hotel website accessibility, restaurant accessibility, accessible web design, WCAG compliance, inclusive web design">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pulse954.com/web-accessibility">
+    <meta property="og:title" content="Website Accessibility for Hotels & Restaurants">
+    <meta property="og:description" content="Make your hospitality website accessible to all guests. Increase conversions by 30% with ADA-compliant accessibility features.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pulse954.com/web-accessibility">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=OpenDyslexic:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #FF9F1C;
+            --success: #2ecc71;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --text-color: #333;
+            --shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-lg: 0 15px 30px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --font-family-dyslexia: 'OpenDyslexic', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        /* High Contrast Mode */
+        body.high-contrast {
+            --primary: #00ffff;
+            --secondary: #ffff00;
+            --text-color: #ffffff;
+            --light: #000000;
+            --dark: #ffffff;
+            background-color: #000000;
+            color: #ffffff;
+        }
+        
+        body.high-contrast .card,
+        body.high-contrast .feature-card,
+        body.high-contrast .stats-card {
+            background-color: #222222;
+            color: #ffffff;
+            border-color: #00ffff;
+        }
+        
+        body.high-contrast a {
+            color: #00ffff;
+        }
+        
+        body.high-contrast .btn-primary {
+            background: #00ffff;
+            color: #000000;
+        }
+        
+        /* Dyslexia-Friendly Font */
+        body.dyslexia-font,
+        body.dyslexia-font * {
+            font-family: var(--font-family-dyslexia) !important;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            transition: opacity 0.3s;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0.95;
+        }
+        
+        .demo-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card ul {
+            list-style: none;
+        }
+        
+        .feature-card li {
+            padding: 8px 0;
+            color: #666;
+        }
+        
+        .feature-card li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 60px 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 3.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .stat-card h4 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .stat-card p {
+            color: #666;
+        }
+        
+        /* Demo Section */
+        .demo-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .demo-box {
+            background: white;
+            padding: 60px 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .demo-box h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .demo-box p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .demo-instructions {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 30px;
+            border-radius: var(--radius);
+            margin: 30px 0;
+        }
+        
+        .demo-instructions ol {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .demo-instructions li {
+            padding: 10px 0;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        /* Accessibility Panel Styles */
+        .accessibility-toggle {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1001;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .accessibility-toggle:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        }
+        
+        .accessibility-panel {
+            position: fixed;
+            top: 160px;
+            right: 20px;
+            z-index: 1002;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            padding: 25px;
+            width: 320px;
+            display: none;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        body.high-contrast .accessibility-panel {
+            background-color: #222222;
+            border-color: #00ffff;
+        }
+        
+        .accessibility-panel.active {
+            display: flex;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .accessibility-panel h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+            text-align: center;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        .accessibility-option {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        body.high-contrast .accessibility-option {
+            background-color: #333;
+            border-color: #555;
+            color: white;
+        }
+        
+        .accessibility-option:hover {
+            background-color: #e9e9e9;
+            transform: translateX(3px);
+        }
+        
+        body.high-contrast .accessibility-option:hover {
+            background-color: #444;
+        }
+        
+        .accessibility-option.active {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        .accessibility-option i {
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .accessibility-slider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+            padding: 0 5px;
+        }
+        
+        .accessibility-slider button {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        body.high-contrast .accessibility-slider button {
+            background-color: #333;
+            border-color: #555;
+            color: white;
+        }
+        
+        .accessibility-slider button:hover:not(:disabled) {
+            background-color: #e9e9e9;
+            transform: scale(1.1);
+        }
+        
+        .accessibility-slider button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .font-size-display {
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+        
+        .accessibility-success-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1003;
+            animation: fadeInUp 0.3s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .accessibility-success-message.show {
+            display: block;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 20px 20px;
+            text-align: center;
+        }
+        
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .accessibility-toggle {
+                top: 80px;
+                right: 15px;
+                font-size: 0.85rem;
+                padding: 10px 15px;
+            }
+            
+            .accessibility-panel {
+                top: 140px;
+                right: 15px;
+                width: calc(100vw - 40px);
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility Toggle Button -->
+    <button class="accessibility-toggle" id="accessibilityToggle" aria-label="Open accessibility options" aria-expanded="false">
+        <i class="fas fa-universal-access"></i> Accessibility
+    </button>
+
+    <!-- Accessibility Panel -->
+    <div class="accessibility-panel" id="accessibilityPanel" role="dialog" aria-label="Accessibility options">
+        <h3>Accessibility Options</h3>
+        
+        <div class="accessibility-slider">
+            <button id="fontSmaller" aria-label="Decrease font size">A-</button>
+            <span class="font-size-display" id="fontSizeDisplay" aria-live="polite">100%</span>
+            <button id="fontBigger" aria-label="Increase font size">A+</button>
+        </div>
+        
+        <div class="accessibility-option" id="highContrastToggle" role="button" tabindex="0">
+            <i class="fas fa-adjust"></i>
+            <span>High Contrast Mode</span>
+        </div>
+        
+        <div class="accessibility-option" id="dyslexiaToggle" role="button" tabindex="0">
+            <i class="fas fa-font"></i>
+            <span>Dyslexia-Friendly Font</span>
+        </div>
+        
+        <div class="accessibility-option" id="resetAccessibility" role="button" tabindex="0">
+            <i class="fas fa-redo"></i>
+            <span>Reset All Settings</span>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="accessibility-success-message" id="accessibilitySuccessMessage">
+        <i class="fas fa-check-circle"></i>
+        <span id="accessibilityMessageText">Settings saved!</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <a href="/">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Pulse954</span>
+                </a>
+            </div>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/#pricing">Pricing</a>
+                <a href="/#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="demo-badge">
+            <i class="fas fa-universal-access"></i> LIVE DEMO - Try the accessibility panel on this page!
+        </div>
+        <h1>Website Accessibility for Hotels & Restaurants</h1>
+        <p>Make your hospitality website accessible to all guests. Increase bookings, ensure ADA compliance, and deliver an inclusive experience that drives revenue.</p>
+        <a href="#demo" class="btn-primary">
+            <i class="fas fa-play-circle"></i>
+            Try Live Demo
+        </a>
+    </section>
+
+    <!-- Features Section -->
+    <div class="container">
+        <div class="section-title">
+            <h2>Powerful Accessibility Features</h2>
+            <p>Everything your guests need for a comfortable browsing experience</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-text-height"></i>
+                </div>
+                <h3>Font Size Control</h3>
+                <p>Let guests adjust text size from 80% to 150% for comfortable reading. Perfect for older guests or those with visual impairments viewing your menu, room descriptions, and booking information.</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Easy-to-use size slider</li>
+                    <li><i class="fas fa-check"></i> Settings saved automatically</li>
+                    <li><i class="fas fa-check"></i> Works across all pages</li>
+                    <li><i class="fas fa-check"></i> Smooth scaling transitions</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <h3>High Contrast Mode</h3>
+                <p>Maximize visibility for guests with low vision or color blindness. High contrast mode makes text, buttons, and images stand out for easier navigation and booking.</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Enhanced color contrast</li>
+                    <li><i class="fas fa-check"></i> Better visibility for CTAs</li>
+                    <li><i class="fas fa-check"></i> Accessible form fields</li>
+                    <li><i class="fas fa-check"></i> Instant toggle on/off</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-font"></i>
+                </div>
+                <h3>Dyslexia-Friendly Font</h3>
+                <p>Switch to OpenDyslexic font designed specifically for guests with dyslexia. Weighted letter bottoms prevent swapping and improve reading comprehension of your content.</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Specialized readable font</li>
+                    <li><i class="fas fa-check"></i> Reduces reading errors</li>
+                    <li><i class="fas fa-check"></i> One-click activation</li>
+                    <li><i class="fas fa-check"></i> Improves comprehension</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="section-title">
+                <h2>Why Accessibility Matters for Hospitality</h2>
+                <p>The business case for accessible websites is clear</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Reach 26% More Guests</h4>
+                    <p>26% of US adults have a disability. Make your hotel or restaurant accessible to everyone and capture this significant market.</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h4>ADA Compliance</h4>
+                    <p>Meet ADA Title III requirements and avoid costly accessibility lawsuits. Stay compliant and protected.</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>30% Higher Conversions</h4>
+                    <p>Accessible websites see up to 30% higher conversion rates from improved user experience and broader reach.</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>Better Reviews</h4>
+                    <p>Guests appreciate inclusive experiences and leave better reviews. Stand out from competitors.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Section -->
+    <div class="container">
+        <div class="section-title">
+            <h2>Simple, Transparent Pricing</h2>
+            <p>Professional accessibility features for your hospitality website</p>
+        </div>
+        
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div class="feature-card" style="border: 3px solid var(--primary); text-align: center; padding: 50px 40px;">
+                <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px;">
+                    <i class="fas fa-universal-access" style="font-size: 4rem; opacity: 0.9;"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; margin-bottom: 10px; color: var(--dark);">$99<span style="font-size: 1.2rem; color: #666;">/month</span></h3>
+                <p style="font-size: 1.2rem; color: var(--primary); font-weight: 600; margin-bottom: 30px;">Web Accessibility Suite</p>
+                
+                <ul style="text-align: left; margin: 30px 0; padding: 0 20px;">
+                    <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>Font Size Adjustment</strong> (80% - 150%)
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>High Contrast Mode</strong>
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>Dyslexia-Friendly Font</strong>
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>Easy Integration</strong> - Works with any website
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>Automatic Preference Saving</strong>
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>Mobile Responsive</strong>
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>WCAG 2.1 Compliant</strong>
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>Custom Branding</strong> (matches your colors)
+                    </li>
+                    <li style="padding: 12px 0;">
+                        <i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i>
+                        <strong>Monthly Updates & Support</strong>
+                    </li>
+                </ul>
+                
+                <div style="background: rgba(102, 126, 234, 0.05); padding: 20px; border-radius: 8px; margin: 30px 0;">
+                    <p style="margin: 0; color: #666; font-size: 0.95rem;">
+                        <i class="fas fa-shield-alt" style="color: var(--success);"></i>
+                        <strong>One-time setup fee: $199</strong><br>
+                        <span style="font-size: 0.9rem;">Includes installation, customization, and testing</span>
+                    </p>
+                </div>
+                
+                <a href="/#contact" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px; font-size: 1.2rem; padding: 18px 35px;">
+                    <i class="fas fa-rocket"></i>
+                    Get Started Today
+                </a>
+                
+                <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> No long-term contract required. Cancel anytime.
+                </p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px; padding: 30px; background: white; border-radius: var(--radius); box-shadow: var(--shadow);">
+                <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.3rem;">💰 ROI Calculator</h4>
+                <p style="color: #666; margin-bottom: 10px;">If just <strong>5 more guests</strong> book per month due to improved accessibility:</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; text-align: left;">
+                    <div>
+                        <strong style="color: var(--dark);">Average Booking:</strong><br>
+                        <span style="color: #666;">$200</span>
+                    </div>
+                    <div>
+                        <strong style="color: var(--dark);">Extra Revenue/Month:</strong><br>
+                        <span style="color: var(--success); font-size: 1.2rem; font-weight: bold;">$1,000</span>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    <strong style="color: var(--primary); font-size: 1.3rem;">10x ROI</strong>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.95rem;">Your $99/month investment pays for itself many times over</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Section -->
+    <section class="demo-section" id="demo">
+        <div class="demo-box">
+            <h3><i class="fas fa-rocket"></i> Try It Right Now!</h3>
+            <p>Experience the accessibility features live on this page. Click the "Accessibility" button in the top-right corner.</p>
+            
+            <div class="demo-instructions">
+                <h4 style="margin-bottom: 20px; color: var(--primary);">How to Test:</h4>
+                <ol>
+                    <li>Click the <strong>"Accessibility"</strong> button (top-right corner)</li>
+                    <li>Try adjusting the font size with <strong>A-</strong> and <strong>A+</strong> buttons</li>
+                    <li>Enable <strong>High Contrast Mode</strong> to see the color change</li>
+                    <li>Try the <strong>Dyslexia-Friendly Font</strong> option</li>
+                    <li>Click <strong>Reset</strong> to restore defaults</li>
+                </ol>
+            </div>
+            
+            <p style="margin-top: 30px; font-size: 1rem; color: #666;">
+                <i class="fas fa-info-circle"></i> Your preferences are automatically saved and will persist across page reloads
+            </p>
+            
+            <div style="margin-top: 40px;">
+                <a href="/#contact" class="btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Add This to Your Website
+                </a>
+                <a href="/" class="btn-primary btn-secondary" style="margin-left: 15px;">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Pulse954. All rights reserved.</p>
+        <p style="margin-top: 10px;">
+            <a href="/">Home</a> | 
+            <a href="/#pricing">Pricing</a> | 
+            <a href="/#contact">Contact</a>
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="accessibility.js"></script>
+</body>
+</html>

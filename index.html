@@ -37,6 +37,7 @@
     <meta name="ICBM" content="26.1224, -80.1373">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=OpenDyslexic:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -291,6 +292,7 @@
             --shadow-lg: 0 15px 30px rgba(0,0,0,0.12);
             --radius: 12px;
             --transition: all 0.3s ease;
+            --font-family-dyslexia: 'OpenDyslexic', sans-serif;
         }
 
         :focus-visible {
@@ -1666,6 +1668,269 @@
                 bottom: 10px;
             }
         }
+        
+        /* ============================================
+           ACCESSIBILITY PANEL STYLES
+           ============================================ */
+        
+        /* High Contrast Mode */
+        body.high-contrast {
+            --primary: #00ffff;
+            --secondary: #ffff00;
+            --accent: #ff00ff;
+            --light: #000000;
+            --dark: #ffffff;
+            background-color: #000000;
+            color: #ffffff;
+        }
+        
+        body.high-contrast .container,
+        body.high-contrast .card,
+        body.high-contrast .service-card,
+        body.high-contrast .pricing-card,
+        body.high-contrast .process-step {
+            background-color: #222222;
+            color: #ffffff;
+            border-color: #00ffff;
+        }
+        
+        body.high-contrast a,
+        body.high-contrast .cta-button {
+            color: #00ffff;
+            border-color: #00ffff;
+        }
+        
+        body.high-contrast .cta-button:hover {
+            background-color: #00ffff;
+            color: #000000;
+        }
+        
+        /* Dyslexia-Friendly Font */
+        body.dyslexia-font,
+        body.dyslexia-font * {
+            font-family: var(--font-family-dyslexia) !important;
+        }
+        
+        /* Accessibility Toggle Button */
+        .accessibility-toggle {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1001;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .accessibility-toggle:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        }
+        
+        .accessibility-toggle:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+        
+        /* Accessibility Panel */
+        .accessibility-panel {
+            position: fixed;
+            top: 160px;
+            right: 20px;
+            z-index: 1002;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            padding: 25px;
+            width: 320px;
+            display: none;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        body.high-contrast .accessibility-panel {
+            background-color: #222222;
+            border-color: #00ffff;
+        }
+        
+        .accessibility-panel.active {
+            display: flex;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .accessibility-panel h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+            text-align: center;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        .accessibility-option {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        body.high-contrast .accessibility-option {
+            background-color: #333;
+            border-color: #555;
+            color: white;
+        }
+        
+        .accessibility-option:hover {
+            background-color: #e9e9e9;
+            transform: translateX(3px);
+        }
+        
+        body.high-contrast .accessibility-option:hover {
+            background-color: #444;
+        }
+        
+        .accessibility-option.active {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        .accessibility-option i {
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .accessibility-slider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+            padding: 0 5px;
+        }
+        
+        .accessibility-slider button {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        body.high-contrast .accessibility-slider button {
+            background-color: #333;
+            border-color: #555;
+            color: white;
+        }
+        
+        .accessibility-slider button:hover:not(:disabled) {
+            background-color: #e9e9e9;
+            transform: scale(1.1);
+        }
+        
+        body.high-contrast .accessibility-slider button:hover:not(:disabled) {
+            background-color: #444;
+        }
+        
+        .accessibility-slider button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .font-size-display {
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+        
+        body.high-contrast .font-size-display {
+            color: var(--secondary);
+        }
+        
+        /* Success message */
+        .accessibility-success-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1003;
+            animation: fadeInUp 0.3s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .accessibility-success-message.show {
+            display: block;
+        }
+        
+        .accessibility-success-message i {
+            margin-right: 8px;
+        }
+        
+        /* Responsive adjustments for accessibility panel */
+        @media (max-width: 768px) {
+            .accessibility-toggle {
+                top: 80px;
+                right: 15px;
+                font-size: 0.85rem;
+                padding: 10px 15px;
+            }
+            
+            .accessibility-panel {
+                top: 140px;
+                right: 15px;
+                width: calc(100vw - 40px);
+                max-width: 300px;
+                padding: 20px;
+            }
+        }
     </style>
     
     <!-- Structured Data (JSON-LD) -->
@@ -1833,6 +2098,44 @@
 </head>
 <body>
     <a class="skip-link" href="#home">Skip to main content</a>
+    
+    <!-- Accessibility Toggle Button -->
+    <button class="accessibility-toggle" id="accessibilityToggle" aria-label="Open accessibility options" aria-expanded="false">
+        <i class="fas fa-universal-access"></i> Accessibility
+    </button>
+
+    <!-- Accessibility Panel -->
+    <div class="accessibility-panel" id="accessibilityPanel" role="dialog" aria-label="Accessibility options" aria-modal="true">
+        <h3>Accessibility Options</h3>
+        
+        <div class="accessibility-slider">
+            <button id="fontSmaller" aria-label="Decrease font size" title="Decrease font size">A-</button>
+            <span class="font-size-display" id="fontSizeDisplay" aria-live="polite">100%</span>
+            <button id="fontBigger" aria-label="Increase font size" title="Increase font size">A+</button>
+        </div>
+        
+        <div class="accessibility-option" id="highContrastToggle" role="button" tabindex="0">
+            <i class="fas fa-adjust"></i>
+            <span>High Contrast Mode</span>
+        </div>
+        
+        <div class="accessibility-option" id="dyslexiaToggle" role="button" tabindex="0">
+            <i class="fas fa-font"></i>
+            <span>Dyslexia-Friendly Font</span>
+        </div>
+        
+        <div class="accessibility-option" id="resetAccessibility" role="button" tabindex="0">
+            <i class="fas fa-redo"></i>
+            <span>Reset All Settings</span>
+        </div>
+    </div>
+
+    <!-- Accessibility Success Message -->
+    <div class="accessibility-success-message" id="accessibilitySuccessMessage">
+        <i class="fas fa-check-circle"></i>
+        <span id="accessibilityMessageText">Settings saved!</span>
+    </div>
+    
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileOverlay"></div>
     
@@ -1843,6 +2146,7 @@
             <li><a href="#social">Services</a></li>
             <li><a href="#process">Process</a></li>
             <li><a href="#pricing">Pricing</a></li>
+            <li><a href="web-accessibility.html">Web Accessibility</a></li>
             <li><a href="#testimonials">Results</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -1869,6 +2173,7 @@
                     <li><a href="#social">Services</a></li>
                     <li><a href="#process">Process</a></li>
                     <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="web-accessibility.html">Web Accessibility</a></li>
                     <li><a href="#testimonials">Results</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -2592,6 +2897,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Accessibility Panel Script -->
+    <script src="accessibility.js"></script>
 
     <script>
         // SIMPLIFIED SCRIPT - REMOVING ALL PREVENTDEFAULT FOR ANCHOR LINKS

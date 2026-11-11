@@ -356,6 +356,17 @@ function displayResults(data, url) {
     const lighthouse = data.lighthouseResult;
     console.log('Processing lighthouse data...');
     
+    // Check if Lighthouse itself encountered an error
+    if (lighthouse.runtimeError) {
+      throw new Error(`Lighthouse error: ${lighthouse.runtimeError.message || 'Unknown error occurred during scan'}`);
+    }
+    
+    // Check if categories exist
+    if (!lighthouse.categories || !lighthouse.categories.performance) {
+      console.error('Missing categories in lighthouse result:', lighthouse);
+      throw new Error('The scan completed but results are incomplete. The website might be temporarily unavailable or the scan timed out.');
+    }
+    
     // Scores
     document.getElementById('perfScore').textContent = lighthouse.categories.performance.score * 100 | 0;
     document.getElementById('perfScore').className = `score-value ${scoreColor(lighthouse.categories.performance.score * 100)}`;

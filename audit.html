@@ -299,8 +299,12 @@ form.addEventListener('submit', async (e) => {
     const endpoint = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
     const params = new URLSearchParams({
       url: url,
-      strategy: 'mobile',
-      category: ['performance', 'accessibility', 'best-practices', 'seo'].join(',')
+      strategy: 'mobile'
+    });
+    
+    // Add each category as a separate parameter
+    ['performance', 'accessibility', 'best-practices', 'seo'].forEach(cat => {
+      params.append('category', cat);
     });
     
     if (apiKey) params.append('key', apiKey);

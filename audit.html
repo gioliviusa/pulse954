@@ -276,9 +276,14 @@ form.addEventListener('submit', async (e) => {
 
   // Validate URL format
   try {
-    new URL(url);
+    const urlObj = new URL(url);
+    // Additional validation: ensure hostname is not empty
+    if (!urlObj.hostname) {
+      showError('Invalid URL format. Please enter a valid domain (e.g., example.com or https://example.com).');
+      return;
+    }
   } catch (err) {
-    showError('Invalid URL format. Make sure to include http:// or https://');
+    showError('Invalid URL format. Please enter a valid domain (e.g., example.com or https://example.com).');
     return;
   }
 

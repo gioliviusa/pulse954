@@ -3553,6 +3553,7 @@
                 const missing = requiredFields.filter(id => !document.getElementById(id).value);
                 if (missing.length) {
                     addMessage('ai', 'Please complete all required contact fields so we can respond quickly.');
+                    return false;
                 }
             }
         });

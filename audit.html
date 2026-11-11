@@ -182,6 +182,9 @@ button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     <div class="form-group">
       <label for="apiKey" style="font-size: 14px; color: #999;">Google API Key (optional for higher limits):</label>
       <input type="text" id="apiKey" name="apiKey" placeholder="Paste your Google PageSpeed API key here (optional)">
+      <div style="background: #fff3cd; border-left: 4px solid #ff9800; padding: 12px; margin-top: 10px; border-radius: 4px; font-size: 13px; color: #856404;">
+        <strong>🔒 Security:</strong> Never share your API key publicly or commit it to version control. It's stored only in your browser's memory and will be cleared when you refresh the page. Keep it private!
+      </div>
     </div>
 
     <button type="submit" style="font-size: 18px; padding: 16px; font-weight: bold;">
@@ -306,35 +309,25 @@ form.addEventListener('submit', async (e) => {
     console.log('Fetching:', fetchUrl);
     
     const response = await fetch(fetchUrl);
+    const data = await response.json();
     
-    if (!response.ok) {
-      // Try to get error details from response
-      let errorDetails = '';
-      try {
-        const errorData = await response.json();
-        if (errorData.error && errorData.error.message) {
-          errorDetails = errorData.error.message;
-        }
-      } catch (e) {
-        // Could not parse error response
-      }
+    if (!response.ok || data.error) {
+      const errorMessage = data.error?.message || 'Unknown error';
+      console.error('API Error:', response.status, errorMessage);
       
-      console.error('API Error:', response.status, errorDetails);
-      
-      if (response.status === 429) {
-        showError('⚠️ Rate limit reached (too many requests). You need a Google API key for more audits today. <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">Get one free here</a> (2 min), paste it above, and try again.');
+      if (data.error?.status === 'RESOURCE_EXHAUSTED' || response.status === 429) {
+        showError('⚠️ <strong>Free quota exhausted!</strong> You need a Google API key to continue. <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">Get a free key here</a> (takes 2 minutes). Once you have it, paste it in the "Google API Key" field above and try again.');
       } else if (response.status === 403) {
         showError('API Error: Invalid or expired API key. Get a new one at <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">Google Cloud Console</a>.');
       } else if (response.status === 400) {
-        showError('⚠️ API Error: ' + (errorDetails || 'The request was rejected. This may mean the URL is not publicly accessible or there\'s an issue with your request.'));
+        showError('⚠️ API Error: ' + (errorMessage || 'Invalid request. Make sure the URL is publicly accessible.'));
       } else {
-        showError(`API Error: ${response.status}. Get a free Google API key <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">here</a> to avoid limits.`);
+        showError(`API Error: ${errorMessage || response.status}. <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">Get a free API key</a> to resolve this.`);
       }
       loading.style.display = 'none';
       return;
     }
 
-    const data = await response.json();
     displayResults(data, url);
     showSuccess('Audit complete! Review the results below.');
     

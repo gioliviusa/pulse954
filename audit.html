@@ -310,7 +310,7 @@ form.addEventListener('submit', async (e) => {
       } else if (response.status === 403) {
         showError('API Error: Invalid or expired API key. Get a new one at <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">Google Cloud Console</a>.');
       } else if (response.status === 400) {
-        showError('Invalid URL format. Make sure to include http:// or https://');
+        showError('⚠️ API Error: The request was rejected. This may mean: (1) You\'ve hit the rate limit - <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">get a free API key</a>, (2) The URL is not publicly accessible, or (3) There\'s a temporary issue. Please try again in a few moments or add an API key.');
       } else {
         showError(`API Error: ${response.status}. Get a free Google API key <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">here</a> to avoid limits.`);
       }

@@ -315,6 +315,9 @@ form.addEventListener('submit', async (e) => {
     const response = await fetch(fetchUrl);
     const data = await response.json();
     
+    console.log('API Response received, status:', response.status);
+    console.log('Response data keys:', Object.keys(data));
+    
     if (!response.ok || data.error) {
       const errorMessage = data.error?.message || 'Unknown error';
       console.error('API Error:', response.status, errorMessage);
@@ -343,42 +346,58 @@ form.addEventListener('submit', async (e) => {
 });
 
 function displayResults(data, url) {
-  const lighthouse = data.lighthouseResult;
-  
-  // Scores
-  document.getElementById('perfScore').textContent = lighthouse.categories.performance.score * 100 | 0;
-  document.getElementById('perfScore').className = `score-value ${scoreColor(lighthouse.categories.performance.score * 100)}`;
-  
-  document.getElementById('a11yScore').textContent = lighthouse.categories.accessibility.score * 100 | 0;
-  document.getElementById('a11yScore').className = `score-value ${scoreColor(lighthouse.categories.accessibility.score * 100)}`;
-  
-  document.getElementById('bpScore').textContent = lighthouse.categories['best-practices'].score * 100 | 0;
-  document.getElementById('bpScore').className = `score-value ${scoreColor(lighthouse.categories['best-practices'].score * 100)}`;
-  
-  document.getElementById('seoScore').textContent = lighthouse.categories.seo.score * 100 | 0;
-  document.getElementById('seoScore').className = `score-value ${scoreColor(lighthouse.categories.seo.score * 100)}`;
+  try {
+    console.log('Received API response:', data);
+    
+    if (!data.lighthouseResult) {
+      throw new Error('No lighthouse results in API response');
+    }
+    
+    const lighthouse = data.lighthouseResult;
+    console.log('Processing lighthouse data...');
+    
+    // Scores
+    document.getElementById('perfScore').textContent = lighthouse.categories.performance.score * 100 | 0;
+    document.getElementById('perfScore').className = `score-value ${scoreColor(lighthouse.categories.performance.score * 100)}`;
+    
+    document.getElementById('a11yScore').textContent = lighthouse.categories.accessibility.score * 100 | 0;
+    document.getElementById('a11yScore').className = `score-value ${scoreColor(lighthouse.categories.accessibility.score * 100)}`;
+    
+    document.getElementById('bpScore').textContent = lighthouse.categories['best-practices'].score * 100 | 0;
+    document.getElementById('bpScore').className = `score-value ${scoreColor(lighthouse.categories['best-practices'].score * 100)}`;
+    
+    document.getElementById('seoScore').textContent = lighthouse.categories.seo.score * 100 | 0;
+    document.getElementById('seoScore').className = `score-value ${scoreColor(lighthouse.categories.seo.score * 100)}`;
 
-  // Core Web Vitals
-  const metrics = lighthouse.audits;
-  let metricsHtml = '';
-  
-  if (metrics['first-contentful-paint']) {
-    metricsHtml += formatMetric('First Contentful Paint (FCP)', metrics['first-contentful-paint'].displayValue);
+    // Core Web Vitals
+    const metrics = lighthouse.audits;
+    let metricsHtml = '';
+    
+    if (metrics['first-contentful-paint']) {
+      metricsHtml += formatMetric('First Contentful Paint (FCP)', metrics['first-contentful-paint'].displayValue);
+    }
+    if (metrics['largest-contentful-paint']) {
+      metricsHtml += formatMetric('Largest Contentful Paint (LCP)', metrics['largest-contentful-paint'].displayValue);
+    }
+    if (metrics['cumulative-layout-shift']) {
+      metricsHtml += formatMetric('Cumulative Layout Shift (CLS)', metrics['cumulative-layout-shift'].displayValue);
+    }
+    if (metrics['total-blocking-time']) {
+      metricsHtml += formatMetric('Total Blocking Time (TBT)', metrics['total-blocking-time'].displayValue);
+    }
+    if (metrics['speed-index']) {
+      metricsHtml += formatMetric('Speed Index', metrics['speed-index'].displayValue);
+    }
+    
+    document.getElementById('metricsContainer').innerHTML = metricsHtml;
+    document.getElementById('result').style.display = 'block';
+    
+    console.log('Results displayed successfully');
+  } catch (err) {
+    console.error('Error displaying results:', err);
+    showError(`Error processing results: ${err.message}`);
   }
-  if (metrics['largest-contentful-paint']) {
-    metricsHtml += formatMetric('Largest Contentful Paint (LCP)', metrics['largest-contentful-paint'].displayValue);
-  }
-  if (metrics['cumulative-layout-shift']) {
-    metricsHtml += formatMetric('Cumulative Layout Shift (CLS)', metrics['cumulative-layout-shift'].displayValue);
-  }
-  if (metrics['total-blocking-time']) {
-    metricsHtml += formatMetric('Total Blocking Time (TBT)', metrics['total-blocking-time'].displayValue);
-  }
-  if (metrics['speed-index']) {
-    metricsHtml += formatMetric('Speed Index', metrics['speed-index'].displayValue);
-  }
-
-  document.getElementById('metricsContainer').innerHTML = metricsHtml;
+}
 
   // Opportunities
   let oppHtml = '<div style="max-height: 400px; overflow-y: auto;">';

@@ -262,9 +262,23 @@ form.addEventListener('submit', async (e) => {
   errorDiv.style.display = 'none';
   successDiv.style.display = 'none';
   
-  const url = urlInput.value.trim();
+  let url = urlInput.value.trim();
   if (!url) {
     showError('Please enter a URL.');
+    return;
+  }
+
+  // Validate and normalize URL format
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = 'https://' + url;
+    urlInput.value = url;
+  }
+
+  // Validate URL format
+  try {
+    new URL(url);
+  } catch (err) {
+    showError('Invalid URL format. Make sure to include http:// or https://');
     return;
   }
 

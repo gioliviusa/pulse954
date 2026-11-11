@@ -302,15 +302,31 @@ form.addEventListener('submit', async (e) => {
     
     if (apiKey) params.append('key', apiKey);
 
-    const response = await fetch(`${endpoint}?${params}`);
+    const fetchUrl = `${endpoint}?${params}`;
+    console.log('Fetching:', fetchUrl);
+    
+    const response = await fetch(fetchUrl);
     
     if (!response.ok) {
+      // Try to get error details from response
+      let errorDetails = '';
+      try {
+        const errorData = await response.json();
+        if (errorData.error && errorData.error.message) {
+          errorDetails = errorData.error.message;
+        }
+      } catch (e) {
+        // Could not parse error response
+      }
+      
+      console.error('API Error:', response.status, errorDetails);
+      
       if (response.status === 429) {
         showError('⚠️ Rate limit reached (too many requests). You need a Google API key for more audits today. <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">Get one free here</a> (2 min), paste it above, and try again.');
       } else if (response.status === 403) {
         showError('API Error: Invalid or expired API key. Get a new one at <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">Google Cloud Console</a>.');
       } else if (response.status === 400) {
-        showError('⚠️ API Error: The request was rejected. This may mean: (1) You\'ve hit the rate limit - <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">get a free API key</a>, (2) The URL is not publicly accessible, or (3) There\'s a temporary issue. Please try again in a few moments or add an API key.');
+        showError('⚠️ API Error: ' + (errorDetails || 'The request was rejected. This may mean the URL is not publicly accessible or there\'s an issue with your request.'));
       } else {
         showError(`API Error: ${response.status}. Get a free Google API key <a href="https://console.developers.google.com/" target="_blank" style="color: #667eea; font-weight: bold;">here</a> to avoid limits.`);
       }

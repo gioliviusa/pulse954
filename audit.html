@@ -401,6 +401,30 @@ function displayResults(data, url) {
     }
     
     document.getElementById('metricsContainer').innerHTML = metricsHtml;
+    
+    // Opportunities
+    let oppHtml = '<div style="max-height: 400px; overflow-y: auto;">';
+    const opportunities = lighthouse.categories.performance.auditRefs
+      .filter(ref => lighthouse.audits[ref.id]?.details?.items?.length)
+      .slice(0, 5);
+
+    if (opportunities.length === 0) {
+      oppHtml += '<p style="color: #10b981; font-weight: 500;">✓ Great job! No major issues detected.</p>';
+    } else {
+      opportunities.forEach(ref => {
+        const audit = lighthouse.audits[ref.id];
+        oppHtml += `
+          <div style="background: #f5f5f5; padding: 15px; margin-bottom: 10px; border-radius: 6px; border-left: 4px solid #f59e0b;">
+            <strong>${audit.title}</strong><br>
+            <small style="color: #666;">${audit.description}</small>
+            ${audit.displayValue ? `<br><strong style="color: #667eea;">Potential savings: ${audit.displayValue}</strong>` : ''}
+          </div>
+        `;
+      });
+    }
+    oppHtml += '</div>';
+    
+    document.getElementById('opportunities').innerHTML = oppHtml;
     document.getElementById('result').style.display = 'block';
     
     console.log('Results displayed successfully');
@@ -408,32 +432,6 @@ function displayResults(data, url) {
     console.error('Error displaying results:', err);
     showError(`Error processing results: ${err.message}`);
   }
-}
-
-  // Opportunities
-  let oppHtml = '<div style="max-height: 400px; overflow-y: auto;">';
-  const opportunities = lighthouse.categories.performance.auditRefs
-    .filter(ref => lighthouse.audits[ref.id]?.details?.items?.length)
-    .slice(0, 5);
-
-  if (opportunities.length === 0) {
-    oppHtml += '<p style="color: #10b981; font-weight: 500;">✓ Great job! No major issues detected.</p>';
-  } else {
-    opportunities.forEach(ref => {
-      const audit = lighthouse.audits[ref.id];
-      oppHtml += `
-        <div style="background: #f5f5f5; padding: 15px; margin-bottom: 10px; border-radius: 6px; border-left: 4px solid #f59e0b;">
-          <strong>${audit.title}</strong><br>
-          <small style="color: #666;">${audit.description}</small>
-          ${audit.displayValue ? `<br><strong style="color: #667eea;">Potential savings: ${audit.displayValue}</strong>` : ''}
-        </div>
-      `;
-    });
-  }
-  oppHtml += '</div>';
-  
-  document.getElementById('opportunities').innerHTML = oppHtml;
-  result.style.display = 'block';
 }
 </script>
 
